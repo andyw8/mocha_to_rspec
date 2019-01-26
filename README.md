@@ -13,7 +13,7 @@ widget.stubs(:foo).returns(bar)
 to
 
 ```ruby
-allow(widget).to receive(:foo).returns(bar)
+allow(widget).to receive(:foo).and_return(bar)
 ```
 
 It does not handle _every_ conversion, but should get you most of the way there.
