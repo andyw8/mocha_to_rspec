@@ -1,8 +1,28 @@
-# MochaToRspec
+# mocha_to_rspec
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/mocha_to_rspec`. To experiment with that code, run `bin/console` for an interactive prompt.
+This gem is to help migrating from [mocha] to [rspec-mocks].
 
-TODO: Delete this and the text above, and describe your gem
+It uses RuboCop to perform the conversion.
+
+It converts the syntax, for example:
+
+```ruby
+widget.stubs(:foo).returns(bar)
+```
+
+to
+
+```ruby
+allow(widget).to receive(:foo).returns(bar)
+```
+
+It does not handle _every_ conversion, but should get you most of the way there.
+
+You might it useful to use this alongside [rspec-multi-mock]
+
+[mocha]: https://github.com/freerange/mocha
+[rspec-mocks]: https://github.com/rspec/rspec-mocks
+[rspec-multi-mock]: https://github.com/endeepak/rspec-multi-mock
 
 ## Installation
 
@@ -22,7 +42,13 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+The individual cops can be run through RuboCop, and you can pass the
+`--auto-correct` flag. However, it really only makes sense to run all the cops
+together, so a single command is provided:
+
+```ruby
+mocha_to_rspec [path]
+```
 
 ## Development
 
@@ -32,7 +58,8 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/mocha_to_rspec.
+I wrote this for use on one particular project so I probably won't be doing any
+further work on it, but pull requests are welcome if accompanied by tests.
 
 ## License
 
