@@ -1,19 +1,12 @@
 require "spec_helper"
 require "rubocop"
 require 'rubocop/rspec/support'
-
-RSpec.shared_examples 'autocorrect' do |original, corrected|
-  it "autocorrects `#{original}` to `#{corrected}`" do
-    autocorrected = autocorrect_source(original, 'spec/foo_spec.rb')
-
-    expect(autocorrected).to eql(corrected)
-  end
-end
+require "rubocop/cop/mocha_to_rspec/stubs_with_args"
 
 module RuboCop
   module Cop
     module MochaToRSpec
-      describe StubsWithArgs do
+      describe StubsWithArgs, irregular: true do
         include RuboCop::RSpec::ExpectOffense
 
         DEFAULT_FILENAME = 'example.rb'.freeze

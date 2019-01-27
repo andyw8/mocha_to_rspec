@@ -1,19 +1,19 @@
 require "spec_helper"
-require "rubocop"
 require 'rubocop/rspec/support'
 require 'support/rubocop_autocorrect'
+require "rubocop/cop/mocha_to_rspec/mock"
 
 module RuboCop
   module Cop
     module MochaToRSpec
-      describe Stub do
+      describe Mock, irregular: true do
         include RuboCop::RSpec::ExpectOffense
 
         DEFAULT_FILENAME = 'example.rb'.freeze
 
         subject(:cop) { described_class.new }
 
-        it "allows rspec-mocks stubbing" do
+        it "allows rspec-mocks mocking" do
           expect_no_offenses(<<-RUBY)
             foo = double
           RUBY
@@ -21,23 +21,23 @@ module RuboCop
 
         it do
           expect_offense(<<-RUBY)
-            foo = stub
-                  ^^^^ Use `double` (rspec-mocks) instead of `stub` (Mocha)
+            foo = mock
+                  ^^^^ Use `double` (rspec-mocks) instead of `mock` (Mocha)
           RUBY
         end
 
         it do
           expect_offense(<<-RUBY)
-            foo = stub(foo: :bar)
-                  ^^^^^^^^^^^^^^^ Use `double` (rspec-mocks) instead of `stub` (Mocha)
+            foo = mock(foo: :bar)
+                  ^^^^^^^^^^^^^^^ Use `double` (rspec-mocks) instead of `mock` (Mocha)
           RUBY
         end
 
         include_examples 'autocorrect',
-          'object = stub',
+          'object = mock',
           'object = double'
         include_examples 'autocorrect',
-          'object = stub(foo: :bar)',
+          'object = mock(foo: :bar)',
           'object = double(foo: :bar)'
       end
     end

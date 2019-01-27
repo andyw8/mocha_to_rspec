@@ -3,10 +3,12 @@ require "rubocop"
 require 'rubocop/rspec/support'
 require 'support/rubocop_autocorrect'
 
+require "rubocop/cop/mocha_to_rspec/and_return"
+
 module RuboCop
   module Cop
     module MochaToRSpec
-      describe AndReturn do
+      describe AndReturn, irregular: true do
         include RuboCop::RSpec::ExpectOffense
 
         DEFAULT_FILENAME = 'example.rb'.freeze

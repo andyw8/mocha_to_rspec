@@ -1,12 +1,11 @@
 require "spec_helper"
 require "rubocop"
-require 'rubocop/rspec/support'
-require 'support/rubocop_autocorrect'
+require "rubocop/cop/mocha_to_rspec/any_instance"
 
 module RuboCop
   module Cop
     module MochaToRSpec
-      describe AnyInstance do
+      describe AnyInstance, irregular: true do
         include RuboCop::RSpec::ExpectOffense
 
         DEFAULT_FILENAME = 'example.rb'.freeze

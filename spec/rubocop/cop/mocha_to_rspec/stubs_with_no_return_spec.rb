@@ -2,12 +2,13 @@ require "spec_helper"
 require "rubocop"
 require 'rubocop/rspec/support'
 require 'support/rubocop_autocorrect'
+require "rubocop/cop/mocha_to_rspec/stubs_with_no_return"
 
 module RuboCop
   module Cop
     module MochaToRSpec
       # FIXME this is a bad name since would also apply to eg borrower.stubs(:work_phone).returns("(416) 555-1234")
-      describe StubsWithNoReturn do
+      describe StubsWithNoReturn, irregular: true do
         include RuboCop::RSpec::ExpectOffense
 
         DEFAULT_FILENAME = 'example.rb'.freeze
