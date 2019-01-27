@@ -1,1 +1,1 @@
-require: rubocop/cop/mocha_to_rspec
+require: "mocha_to_rspec"
