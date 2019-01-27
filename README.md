@@ -20,9 +20,12 @@ It does not handle _every_ conversion, but should get you most of the way there.
 
 You might find it useful to use this alongside [rspec-multi-mock]
 
+The gem's structure is based on [rubocop-github].
+
 [mocha]: https://github.com/freerange/mocha
 [rspec-mocks]: https://github.com/rspec/rspec-mocks
 [rspec-multi-mock]: https://github.com/endeepak/rspec-multi-mock
+[rubocop-github]: https://github.com/github/rubocop-github
 
 ## Installation
 

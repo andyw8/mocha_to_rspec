@@ -1,11 +1,11 @@
 
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "mocha_to_rspec/version"
+require "rubocop/cop/mocha_to_rspec/version"
 
 Gem::Specification.new do |spec|
   spec.name          = "mocha_to_rspec"
-  spec.version       = MochaToRspec::VERSION
+  spec.version       = RuboCop::Cop::MochaToRSpec::VERSION
   spec.authors       = ["Andy Waite"]
   spec.email         = ["andyw8@users.noreply.github.com"]
 
@@ -35,4 +35,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "rubocop", "~> 0.63"
+  spec.add_development_dependency "activesupport"
 end
