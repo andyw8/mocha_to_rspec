@@ -27,6 +27,11 @@ The gem's structure is based on [rubocop-github].
 [rspec-multi-mock]: https://github.com/endeepak/rspec-multi-mock
 [rubocop-github]: https://github.com/github/rubocop-github
 
+## Known Limitations
+
+* `.yields`
+* `.at_least_once` (and similar count-based checks)
+
 ## Installation
 
 Add this line to your application's Gemfile:
