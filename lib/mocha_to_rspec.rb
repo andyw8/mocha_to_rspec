@@ -1,4 +1,4 @@
-#require "rubocop"
+require "rubocop"
 
 require "rubocop/cop/mocha_to_rspec/version"
 require "rubocop/cop/mocha_to_rspec/and_return"

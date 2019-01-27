@@ -1,5 +1,3 @@
-require 'rubocop/cop/internal_affairs'
-
 module RuboCop
   module Cop
     module MochaToRSpec
