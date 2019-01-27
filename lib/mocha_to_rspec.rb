@@ -15,12 +15,13 @@ require "active_support/core_ext/string/inflections" # for `camelize`
 module MochaToRSpec
   # Your code goes here...
   def self.cop_list
-    Dir["lib/rubocop/cop/mocha_to_rspec/*"].map do |filename|
+    Dir["#{File.dirname(__FILE__)}/rubocop/cop/mocha_to_rspec/*"].map do |filename|
       filename
         .split("/")
         .last
         .gsub(".rb", '')
         .camelize
-    end.map { |x| "#{MochaToRSpec}/#{x}" }
+    end.reject { |x| x == "Version" }
+        .map { |x| "#{MochaToRSpec}/#{x}" }
   end
 end
