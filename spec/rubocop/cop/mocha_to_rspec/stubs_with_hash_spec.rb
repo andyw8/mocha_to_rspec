@@ -1,6 +1,3 @@
-require "spec_helper"
-require "rubocop"
-require 'rubocop/rspec/support'
 require "rubocop/cop/mocha_to_rspec/stubs_with_hash"
 
 module RuboCop

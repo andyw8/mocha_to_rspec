@@ -1,5 +1,7 @@
 require "bundler/setup"
 require "mocha_to_rspec"
+require 'rubocop/rspec/support'
+require "support/rubocop_autocorrect"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

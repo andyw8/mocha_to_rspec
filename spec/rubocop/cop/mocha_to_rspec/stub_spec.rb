@@ -1,6 +1,3 @@
-require "spec_helper"
-require "rubocop"
-require 'support/rubocop_autocorrect'
 require 'rubocop/cop/mocha_to_rspec/stub'
 
 module RuboCop
