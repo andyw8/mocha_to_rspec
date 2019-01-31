@@ -43,10 +43,10 @@ module RuboCop
 
 
         include_examples 'autocorrect',
-          'object.stubs(:foo).with(:bar)',
+          'object.stubs(:foo).with(:bar)', # variable
           'allow(object).to receive(:foo).with(:bar)'
         include_examples 'autocorrect',
-          'Object.stubs(:foo).with(:bar)',
+          'Object.stubs(:foo).with(:bar)', # class
           'allow(Object).to receive(:foo).with(:bar)'
         include_examples 'autocorrect',
           'Object.stubs(:fop).with(:bar)',
