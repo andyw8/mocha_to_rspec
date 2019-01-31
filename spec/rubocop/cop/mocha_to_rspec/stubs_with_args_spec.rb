@@ -2,6 +2,7 @@ require "spec_helper"
 require "rubocop"
 require 'rubocop/rspec/support'
 require "rubocop/cop/mocha_to_rspec/stubs_with_args"
+require "support/rubocop_autocorrect"
 
 module RuboCop
   module Cop
@@ -13,61 +14,65 @@ module RuboCop
 
         subject(:cop) { described_class.new }
 
-        it "allows rspec-mocks stubbing using `with`" do
+        it "ignores if already using rspec-mocks syntax" do
           expect_no_offenses(<<-RUBY)
-            Object.stubs(:foo)
-            allow(Object).to receive(:foo).with(:bar)
+            allow(Object).to receive(:foo).with(:bar).and_return(z)
+          RUBY
+        end
+
+        it "allows if stubbing using a hash" do
+          expect_no_offenses(<<-RUBY)
+            Object.stubs(foo: :foz).returns(z)
           RUBY
         end
 
         specify do
           expect_offense(<<-RUBY)
-            Object.stubs(:foo).with(:bar)
-                               ^^^^ Use `allow/expect(Object).to receive(...).with(...)` (rspec-mocks) instead of `Object.stubs/expects(...).with(...)` (Mocha)
+            object.stubs(:foo).with(:bar).returns(:z)
+                                          ^^^^^^^ Use `allow/expect(object).to receive(...).with(...)` (rspec-mocks) instead of `object.stubs/expects(...).with(...)` (Mocha)
           RUBY
         end
 
         specify do
           expect_offense(<<-RUBY)
-            Object.stubs(:foo).with(:bar, :baz)
-                               ^^^^ Use `allow/expect(Object).to receive(...).with(...)` (rspec-mocks) instead of `Object.stubs/expects(...).with(...)` (Mocha)
+            Object.stubs(:foo).with(:bar, :baz).returns(:z)
+                                                ^^^^^^^ Use `allow/expect(object).to receive(...).with(...)` (rspec-mocks) instead of `object.stubs/expects(...).with(...)` (Mocha)
           RUBY
         end
 
         specify do
           expect_offense(<<-RUBY)
-            Object.expects(:foo).with(:bar)
-                                 ^^^^ Use `allow/expect(Object).to receive(...).with(...)` (rspec-mocks) instead of `Object.stubs/expects(...).with(...)` (Mocha)
+            Object.expects(:foo).with(:bar).returns(:z)
+                                            ^^^^^^^ Use `allow/expect(object).to receive(...).with(...)` (rspec-mocks) instead of `object.stubs/expects(...).with(...)` (Mocha)
           RUBY
         end
 
-
         include_examples 'autocorrect',
-          'object.stubs(:foo).with(:bar)', # variable
-          'allow(object).to receive(:foo).with(:bar)'
+          'object.stubs(:foo).with(:bar).returns(:z)', # variable
+          'allow(object).to receive(:foo).with(:bar).and_return(:z)'
         include_examples 'autocorrect',
-          'Object.stubs(:foo).with(:bar)', # class
-          'allow(Object).to receive(:foo).with(:bar)'
+          'Object.stubs(:foo).with(:bar).returns(:z)', # class
+          'allow(Object).to receive(:foo).with(:bar).and_return(:z)'
         include_examples 'autocorrect',
-          'Object.stubs(:fop).with(:bar)',
-          'allow(Object).to receive(:fop).with(:bar)'
+          'Object.stubs(:fop).with(:bar).returns(:z)',
+          'allow(Object).to receive(:fop).with(:bar).and_return(:z)'
         include_examples 'autocorrect',
-          'Object.stubs(:foo).with("bar")',
-          'allow(Object).to receive(:foo).with("bar")'
+          'Object.stubs(:foo).with("bar").returns(:z)',
+          'allow(Object).to receive(:foo).with("bar").and_return(:z)'
         include_examples 'autocorrect',
-          'Object.expects(:foo).with(:bar)',
-          'expect(Object).to receive(:foo).with(:bar)'
+          'Object.expects(:foo).with(:bar).returns(:z)',
+          'expect(Object).to receive(:foo).with(:bar).and_return(:z)'
         include_examples 'autocorrect',
-          'Object.expects(:foo).with(:bar, :baz)',
-          'expect(Object).to receive(:foo).with(:bar, :baz)'
+          'Object.expects(:foo).with(:bar, :baz).returns(:z)',
+          'expect(Object).to receive(:foo).with(:bar, :baz).and_return(:z)'
         include_examples 'autocorrect',
-          'Widget.expects(:foo).with(:bar, :baz)',
-          'expect(Widget).to receive(:foo).with(:bar, :baz)'
+          'Widget.expects(:foo).with(:bar, :baz).returns(:z)',
+          'expect(Widget).to receive(:foo).with(:bar, :baz).and_return(:z)'
         include_examples 'autocorrect',
-          'Namespace::Object.expects(:foo).with(:bar, :baz)',
-          'expect(Namespace::Object).to receive(:foo).with(:bar, :baz)'
+          'Namespace::Object.expects(:foo).with(:bar, :baz).returns(:z)',
+          'expect(Namespace::Object).to receive(:foo).with(:bar, :baz).and_return(:z)'
         include_examples 'autocorrect',
-          'row.expects(value_method).with(arg).and_return(return_value)',
+          'row.expects(value_method).with(arg).returns(return_value)',
           'expect(row).to receive(value_method).with(arg).and_return(return_value)'
       end
     end
