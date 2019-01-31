@@ -13,7 +13,7 @@ module RuboCop
 
         subject(:cop) { described_class.new }
 
-        it "allows rspec-mocks stubbing" do
+        it "ignores if arg is not a hash" do
           expect_no_offenses(<<-RUBY)
             Object.stubs(:foo)
           RUBY
