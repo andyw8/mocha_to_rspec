@@ -4,7 +4,7 @@ module RuboCop
       class StubsWithHash < Cop
         MSG = "Use `allow(...).to receive(...).and_return(...)` or `allow(...).to receive_messages` (rspec-mocks) instead of `stubs` (Mocha)".freeze
 
-        def_node_matcher :candidate?, '(send $_ ${:stubs :expects} hash_type?)'
+        def_node_matcher :candidate?, '(send _ {:stubs :expects} hash_type?)'
 
         def single_pair_hash?(node)
           return false unless node.class == RuboCop::AST::HashNode
