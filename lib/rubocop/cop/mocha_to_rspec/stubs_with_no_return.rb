@@ -12,7 +12,7 @@ module RuboCop
           candidate?(node) do |_match, stubs_receiver|
             _receiver, method_name, _args = *stubs_receiver
             return if method_name == :any_instance
-            return if node.parent&.parent&.source&.includes?(".returns")
+            return if node.parent&.parent&.source&.include?(".returns")
 
             add_offense(node)
           end
