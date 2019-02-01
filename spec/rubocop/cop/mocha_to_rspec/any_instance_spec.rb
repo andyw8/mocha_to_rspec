@@ -18,9 +18,9 @@ module RuboCop
           RUBY
         end
 
-        it "allows rspec-mocks 'expect_any_instance_of'" do
+        it "ignores if uses a return" do
           expect_no_offenses(<<-RUBY)
-            expect_any_instance_of(Object).to receive(:foo)
+            Object.any_instance.stubs(:foo).returns(z)
           RUBY
         end
 
@@ -45,12 +45,6 @@ module RuboCop
         include_examples 'autocorrect',
           'Object.any_instance.stubs(:foo)',
           'allow_any_instance_of(Object).to receive(:foo)'
-        include_examples 'autocorrect',
-          'Object.any_instance.stubs(:foo).returns(:bar)',
-          'allow_any_instance_of(Object).to receive(:foo).returns(:bar)'
-        include_examples 'autocorrect',
-          'Borrower.any_instance.stubs(:idv_response).returns(nil)',
-          'allow_any_instance_of(Borrower).to receive(:idv_response).returns(nil)'
         include_examples 'autocorrect',
           'Purchase.any_instance.stubs(lender_transfered: true)',
           'allow_any_instance_of(Purchase).to receive(lender_transfered: true)'

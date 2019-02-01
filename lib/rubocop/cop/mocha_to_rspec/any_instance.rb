@@ -20,6 +20,7 @@ module RuboCop
 
         def on_send(node)
           candidate?(node) do
+            return if node.parent&.source&.include?("returns")
             add_offense(node, location: :selector)
           end
         end
