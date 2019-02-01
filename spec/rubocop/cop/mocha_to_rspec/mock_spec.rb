@@ -1,41 +1,25 @@
-require "rubocop/cop/mocha_to_rspec/mock"
+require "rubocop/cop/mocha_to_rspec/at_least"
 
 module RuboCop
   module Cop
     module MochaToRSpec
-      describe Mock, irregular: true do
+      describe AtLeast, irregular: true do
         include RuboCop::RSpec::ExpectOffense
 
         DEFAULT_FILENAME = 'example.rb'.freeze
 
         subject(:cop) { described_class.new }
 
-        it "allows rspec-mocks mocking" do
-          expect_no_offenses(<<-RUBY)
-            foo = double
-          RUBY
-        end
-
-        it do
+        specify do
           expect_offense(<<-RUBY)
-            foo = mock
-                  ^^^^ Use `double` (rspec-mocks) instead of `mock` (Mocha)
-          RUBY
-        end
-
-        it do
-          expect_offense(<<-RUBY)
-            foo = mock(foo: :bar)
-                  ^^^^^^^^^^^^^^^ Use `double` (rspec-mocks) instead of `mock` (Mocha)
+            obj.expects(:foo).at_least_once
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Use `at_least(:once)` (rspec-mocks) instead of `at_least_once` (Mocha)
           RUBY
         end
 
         include_examples 'autocorrect',
-          'object = mock',
-          'object = double'
-        include_examples 'autocorrect',
-          'object = mock(foo: :bar)',
-          'object = double(foo: :bar)'
+          'obj.expects(:foo).at_least_once',
+          'obj.expects(:foo).at_least(:once)'
       end
     end
   end
