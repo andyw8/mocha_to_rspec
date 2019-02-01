@@ -1,7 +1,6 @@
 require "rubocop"
 
 require "rubocop/cop/mocha_to_rspec/version"
-require "rubocop/cop/mocha_to_rspec/and_return"
 require "rubocop/cop/mocha_to_rspec/any_instance"
 require "rubocop/cop/mocha_to_rspec/mock"
 require "rubocop/cop/mocha_to_rspec/raises"
