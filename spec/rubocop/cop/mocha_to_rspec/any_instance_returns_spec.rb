@@ -25,38 +25,27 @@ module RuboCop
         end
 
         it do
-          # TODO this should be allow
           expect_offense(<<-RUBY)
-            Object.any_instance.stubs(:foo)
-                                ^^^^^ Use `expect_any_instance_of(...)` (rspec-mocks) instead of `any_instance` (Mocha)
-          RUBY
-        end
-
-        it do
-          expect_offense(<<-RUBY)
-            Object.any_instance.expects(:foo)
-                                ^^^^^^^ Use `expect_any_instance_of(...)` (rspec-mocks) instead of `any_instance` (Mocha)
+            Object.any_instance.expects(:foo).returns(b)
+                                              ^^^^^^^ Use `expect_any_instance_of(...)` (rspec-mocks) instead of `any_instance` (Mocha)
           RUBY
         end
 
         include_examples 'autocorrect',
-          'Object.any_instance.expects(:foo)',
-          'expect_any_instance_of(Object).to receive(:foo)'
+          'Object.any_instance.expects(:foo).returns(b)',
+          'expect_any_instance_of(Object).to receive(:foo).and_return(b)'
         include_examples 'autocorrect',
-          'Object.any_instance.stubs(:foo)',
-          'allow_any_instance_of(Object).to receive(:foo)'
+          'Object.any_instance.stubs(:foo).returns(b)',
+          'allow_any_instance_of(Object).to receive(:foo).and_return(b)'
         include_examples 'autocorrect',
           'Object.any_instance.stubs(:foo).returns(:bar)',
-          'allow_any_instance_of(Object).to receive(:foo).returns(:bar)'
+          'allow_any_instance_of(Object).to receive(:foo).and_return(:bar)'
         include_examples 'autocorrect',
           'Borrower.any_instance.stubs(:idv_response).returns(nil)',
-          'allow_any_instance_of(Borrower).to receive(:idv_response).returns(nil)'
+          'allow_any_instance_of(Borrower).to receive(:idv_response).and_return(nil)'
         include_examples 'autocorrect',
-          'Purchase.any_instance.stubs(lender_transfered: true)',
-          'allow_any_instance_of(Purchase).to receive(lender_transfered: true)'
-        include_examples 'autocorrect',
-          'Purchase.any_instance.stubs(lender_transfer_date: Date.parse("2017-01-15").end_of_day)',
-          'allow_any_instance_of(Purchase).to receive(lender_transfer_date: Date.parse("2017-01-15").end_of_day)'
+          'Purchase.any_instance.stubs(lender_transfered: true).returns(b)',
+          'allow_any_instance_of(Purchase).to receive(lender_transfered: true).and_return(b)'
       end
     end
   end

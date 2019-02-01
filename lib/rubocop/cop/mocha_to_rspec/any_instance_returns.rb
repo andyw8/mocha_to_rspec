@@ -11,11 +11,7 @@ module RuboCop
 #   (sym :foo)
 # )
         def_node_matcher :candidate?, <<-RUBY
-          $(send
-            (send ... :any_instance)
-            {:stubs :expects}
-            _
-          )
+          (send (send (send _ :any_instance) {:stubs :expects} _) :returns _)
         RUBY
 
         def on_send(node)
@@ -26,7 +22,9 @@ module RuboCop
 
         def autocorrect(node)
           lambda do |corrector|
-            variant = node.children[1]
+            obj_any_expects_arg, _returns, ret_val = *node
+            obj_any_instance, variant, method_name = *obj_any_expects_arg
+            obj, _any_instance, _ = *obj_any_instance
             r = case variant
                 when :expects
                   "expect_any_instance_of"
@@ -36,10 +34,7 @@ module RuboCop
                   require 'pry'; binding.pry
                   raise "Invalid variant"
                 end
-            receiver, _method_name, args = *node
-            stubbed_method = args.source
-            klass = receiver.children.first.source
-            new_source = "#{r}(#{klass}).to receive(#{stubbed_method})"
+            new_source = "#{r}(#{obj.source}).to receive(#{method_name.source}).and_return(#{ret_val.source})"
             corrector.replace(node.source_range, new_source)
           end
         end
