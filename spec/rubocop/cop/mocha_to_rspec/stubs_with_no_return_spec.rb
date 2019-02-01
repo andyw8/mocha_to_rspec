@@ -21,15 +21,10 @@ module RuboCop
 # (send
 #   (send
 #     (const nil :Object) :any_instance) :stubs (sym :foo))
-        it "..." do
+        it "ignores if any_instance" do
           expect_no_offenses(<<-RUBY)
             Object.any_instance.stubs(:foo)
 
-          RUBY
-        end
-        it "..." do
-          expect_no_offenses(<<-RUBY)
-            Purchase.any_instance.stubs(lender_transfer_date: Date.parse("2017-01-15").end_of_day)
           RUBY
         end
 
@@ -37,7 +32,7 @@ module RuboCop
 #   (const nil :Object) :stubs
 #   (sym :foo))
         # handled by stubs with hash
-        it do
+        it "ignores stub with hash (handled separately)" do
           expect_no_offenses(<<-RUBY)
             Object.stubs(foo: :bar)
           RUBY
@@ -45,21 +40,7 @@ module RuboCop
 
         it do
           expect_offense(<<-RUBY)
-            Object.stubs(:foo)
-            ^^^^^^^^^^^^^^^^^^ Use `allow(...).to receive(...)` (rspec-mocks) instead of `stubs` (Mocha)
-          RUBY
-        end
-
-        it do
-          expect_offense(<<-RUBY)
             Object.stubs(:foo).and_returns(:bar)
-            ^^^^^^^^^^^^^^^^^^ Use `allow(...).to receive(...)` (rspec-mocks) instead of `stubs` (Mocha)
-          RUBY
-        end
-
-        it do
-          expect_offense(<<-RUBY)
-            object.stubs(:foo).and_returns(:bar)
             ^^^^^^^^^^^^^^^^^^ Use `allow(...).to receive(...)` (rspec-mocks) instead of `stubs` (Mocha)
           RUBY
         end
@@ -75,18 +56,12 @@ module RuboCop
           RUBY
         end
 
-        it do
-          expect_offense(<<-RUBY)
-            Object.stubs(:foo).and_returns(:bar)
-            ^^^^^^^^^^^^^^^^^^ Use `allow(...).to receive(...)` (rspec-mocks) instead of `stubs` (Mocha)
-          RUBY
-        end
-          include_examples 'autocorrect',
-            'Object.stubs(:foo)',
-            'allow(Object).to receive(:foo)'
-          include_examples 'autocorrect',
-            'loan.borrower.stubs(:work_phone)',
-            'allow(loan.borrower).to receive(:work_phone)'
+        include_examples 'autocorrect',
+          'Object.stubs(:foo)',
+          'allow(Object).to receive(:foo)'
+        include_examples 'autocorrect',
+          'loan.borrower.stubs(:work_phone)',
+          'allow(loan.borrower).to receive(:work_phone)'
       end
     end
   end
