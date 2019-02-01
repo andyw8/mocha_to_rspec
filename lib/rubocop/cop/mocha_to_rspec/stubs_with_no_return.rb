@@ -5,7 +5,7 @@ module RuboCop
         MSG = "Use `allow(...).to receive(...)` (rspec-mocks) instead of `stubs` (Mocha)".freeze
 
         def_node_matcher :candidate?, <<-NODE_PATTERN
-          $(send $(...) :stubs sym_type?)
+          $(send $(...) {:stubs :expects} sym_type?)
         NODE_PATTERN
 
         def on_send(node)
@@ -20,10 +20,18 @@ module RuboCop
 
         def autocorrect(node)
           lambda do |corrector|
-            receiver, method, args = *node
+            receiver, stubs_or_expects, args = *node
             message, _, _ = *args
             object = receiver.source
-            corrector.replace(node.source_range, "allow(#{object}).to receive(:#{message})")
+            variant = case stubs_or_expects
+                      when :stubs
+                        "allow"
+                      when :expects
+                        "expect"
+                      else
+                        raise "Got #{stubs_or_expects}"
+                      end
+            corrector.replace(node.source_range, "#{variant}(#{object}).to receive(:#{message})")
           end
         end
       end

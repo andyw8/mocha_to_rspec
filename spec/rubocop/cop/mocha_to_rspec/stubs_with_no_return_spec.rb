@@ -40,7 +40,7 @@ module RuboCop
 
         it do
           expect_offense(<<-RUBY)
-            Object.stubs(:foo).and_returns(:bar)
+            Object.stubs(:foo).returns(:bar)
             ^^^^^^^^^^^^^^^^^^ Use `allow(...).to receive(...)` (rspec-mocks) instead of `stubs` (Mocha)
           RUBY
         end
@@ -62,6 +62,9 @@ module RuboCop
         include_examples 'autocorrect',
           'loan.borrower.stubs(:work_phone)',
           'allow(loan.borrower).to receive(:work_phone)'
+        include_examples 'autocorrect',
+          'Rollbar.expects(:info).with("Marqeta", event: event, loan: loan).once',
+          'expect(Rollbar).to receive(:info).with("Marqeta", event: event, loan: loan).once'
       end
     end
   end
