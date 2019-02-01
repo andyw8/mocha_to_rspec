@@ -1,4 +1,4 @@
-require "rubocop/cop/mocha_to_rspec/raises"
+require "rubocop/cop/mocha_to_rspec/context"
 
 module RuboCop
   module Cop
@@ -47,6 +47,24 @@ module RuboCop
           expect_offense(<<-RUBY)
             before(:all) do
               obj.any_instance.expects(:foo)
+                               ^^^^^^^ Stubbing not allowed here
+            end
+          RUBY
+        end
+
+        specify do
+          expect_offense(<<-RUBY)
+            before(:all) do
+              obj.any_instance.expects(:foo).returns(b)
+                               ^^^^^^^ Stubbing not allowed here
+            end
+          RUBY
+        end
+
+        specify do
+          expect_offense(<<-RUBY)
+            before(:context) do
+              obj.any_instance.expects(:foo).returns(b)
                                ^^^^^^^ Stubbing not allowed here
             end
           RUBY

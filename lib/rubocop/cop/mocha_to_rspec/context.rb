@@ -11,7 +11,10 @@ CODE
 
         def on_send(node)
           candidate?(node) do
-            return unless node.parent&.source&.include?("before(:all)") == true
+            return unless (node.parent&.source&.include?("before(:all)") == true) ||
+              (node.parent&.parent&.source&.include?("before(:all)") == true) ||
+              (node.parent&.source&.include?("before(:context)") == true) ||
+              (node.parent&.parent&.source&.include?("before(:context)") == true)
             add_offense(node, location: :selector)
           end
         end
