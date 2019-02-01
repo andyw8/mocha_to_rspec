@@ -13,7 +13,7 @@ module RuboCop
         def_node_matcher :candidate?, <<-RUBY
           $(send
             (send ... :any_instance)
-            ${:stubs :expects}
+            {:stubs :expects}
             _
           )
         RUBY
