@@ -3,8 +3,8 @@ require "rubocop/cop/mocha_to_rspec/stubs_with_no_return"
 module RuboCop
   module Cop
     module MochaToRSpec
-      # FIXME this is a bad name since would also apply to eg borrower.stubs(:work_phone).returns("(416) 555-1234")
-      describe StubsWithNoReturn, irregular: true do
+      # FIXME: this is a bad name since would also apply to eg borrower.stubs(:work_phone).returns("(416) 555-1234")
+      describe StubsWithNoReturn do
         include RuboCop::RSpec::ExpectOffense
 
         DEFAULT_FILENAME = 'example.rb'.freeze
@@ -57,14 +57,14 @@ module RuboCop
         end
 
         include_examples 'autocorrect',
-          'Object.stubs(:foo)',
-          'allow(Object).to receive(:foo)'
+                         'Object.stubs(:foo)',
+                         'allow(Object).to receive(:foo)'
         include_examples 'autocorrect',
-          'loan.borrower.stubs(:work_phone)',
-          'allow(loan.borrower).to receive(:work_phone)'
+                         'loan.borrower.stubs(:work_phone)',
+                         'allow(loan.borrower).to receive(:work_phone)'
         include_examples 'autocorrect',
-          'Rollbar.expects(:info).with("Marqeta", event: event, loan: loan).once',
-          'expect(Rollbar).to receive(:info).with("Marqeta", event: event, loan: loan).once'
+                         'Rollbar.expects(:info).with("Marqeta", event: event, loan: loan).once',
+                         'expect(Rollbar).to receive(:info).with("Marqeta", event: event, loan: loan).once'
       end
     end
   end

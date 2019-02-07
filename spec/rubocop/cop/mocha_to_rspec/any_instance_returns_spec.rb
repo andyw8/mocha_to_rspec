@@ -5,7 +5,7 @@ require "rubocop/cop/mocha_to_rspec/any_instance_returns"
 module RuboCop
   module Cop
     module MochaToRSpec
-      describe AnyInstanceReturns, irregular: true do
+      describe AnyInstanceReturns do
         include RuboCop::RSpec::ExpectOffense
 
         DEFAULT_FILENAME = 'example.rb'.freeze
@@ -31,21 +31,22 @@ module RuboCop
           RUBY
         end
 
+        # expects, return a var
         include_examples 'autocorrect',
-          'Object.any_instance.expects(:foo).returns(b)',
-          'expect_any_instance_of(Object).to receive(:foo).and_return(b)'
+                         'Object.any_instance.expects(:foo).returns(b)',
+                         'expect_any_instance_of(Object).to receive(:foo).and_return(b)'
+        # stubs, return a var
         include_examples 'autocorrect',
-          'Object.any_instance.stubs(:foo).returns(b)',
-          'allow_any_instance_of(Object).to receive(:foo).and_return(b)'
+                         'Object.any_instance.stubs(:foo).returns(b)',
+                         'allow_any_instance_of(Object).to receive(:foo).and_return(b)'
+        # stubs, return a symbol
         include_examples 'autocorrect',
-          'Object.any_instance.stubs(:foo).returns(:bar)',
-          'allow_any_instance_of(Object).to receive(:foo).and_return(:bar)'
+                         'Object.any_instance.stubs(:foo).returns(:bar)',
+                         'allow_any_instance_of(Object).to receive(:foo).and_return(:bar)'
+        # stubs, return nil
         include_examples 'autocorrect',
-          'Borrower.any_instance.stubs(:idv_response).returns(nil)',
-          'allow_any_instance_of(Borrower).to receive(:idv_response).and_return(nil)'
-        include_examples 'autocorrect',
-          'Purchase.any_instance.stubs(lender_transfered: true).returns(b)',
-          'allow_any_instance_of(Purchase).to receive(lender_transfered: true).and_return(b)'
+                         'Object.any_instance.stubs(:foo).returns(:bar)',
+                         'allow_any_instance_of(Object).to receive(:foo).and_return(:bar)'
       end
     end
   end

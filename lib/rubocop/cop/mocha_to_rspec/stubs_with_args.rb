@@ -2,7 +2,7 @@ module RuboCop
   module Cop
     module MochaToRSpec
       class StubsWithArgs < Cop
-        # TODO Use seperate messages for allow/expect.
+        # TODO: Use seperate messages for allow/expect.
         MSG = "Use `allow/expect(object).to receive(...).with(...)` (rspec-mocks) instead of `object.stubs/expects(...).with(...)` (Mocha)".freeze
         def_node_matcher :candidate?, <<-CODE
   (send (send (send _ {:stubs :expects} _) :with ...) :returns _)

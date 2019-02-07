@@ -24,8 +24,8 @@ module RuboCop
         end
 
         include_examples 'autocorrect',
-          'dbl.stubs(:foo).raises("boom")',
-          'dbl.stubs(:foo).and_raise("boom")'
+                         'dbl.stubs(:foo).raises("boom")',
+                         'dbl.stubs(:foo).and_raise("boom")'
       end
     end
   end

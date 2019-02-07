@@ -3,7 +3,7 @@ require "rubocop/cop/mocha_to_rspec/stubs_with_hash"
 module RuboCop
   module Cop
     module MochaToRSpec
-      describe StubsWithHash, irregular: true do
+      describe StubsWithHash do
         include RuboCop::RSpec::ExpectOffense
 
         DEFAULT_FILENAME = 'example.rb'.freeze
@@ -43,23 +43,23 @@ module RuboCop
         end
 
         include_examples 'autocorrect',
-          'Object.stubs(foo: :bar)',
-          'allow(Object).to receive(:foo).and_return(:bar)'
+                         'Object.stubs(foo: :bar)',
+                         'allow(Object).to receive(:foo).and_return(:bar)'
         include_examples 'autocorrect',
-          'object.stubs(foo: :bar)',
-          'allow(object).to receive(:foo).and_return(:bar)'
+                         'object.stubs(foo: :bar)',
+                         'allow(object).to receive(:foo).and_return(:bar)'
         include_examples 'autocorrect',
-          'Object.stubs(foo: "bar")',
-          'allow(Object).to receive(:foo).and_return("bar")'
+                         'Object.stubs(foo: "bar")',
+                         'allow(Object).to receive(:foo).and_return("bar")'
         include_examples 'autocorrect',
-          'Object.stubs(foo: "bar", bat: "baz")',
-          'allow(Object).to receive_messages(foo: "bar", bat: "baz")'
+                         'Object.stubs(foo: "bar", bat: "baz")',
+                         'allow(Object).to receive_messages(foo: "bar", bat: "baz")'
         include_examples 'autocorrect',
-          'Object.stubs("foo" => "bar", "bat" => "baz")',
-          'allow(Object).to receive_messages("foo" => "bar", "bat" => "baz")'
+                         'Object.stubs("foo" => "bar", "bat" => "baz")',
+                         'allow(Object).to receive_messages("foo" => "bar", "bat" => "baz")'
         include_examples 'autocorrect',
-          'Foo::Object.stubs("foo" => "bar", "bat" => "baz")',
-          'allow(Foo::Object).to receive_messages("foo" => "bar", "bat" => "baz")'
+                         'Foo::Object.stubs("foo" => "bar", "bat" => "baz")',
+                         'allow(Foo::Object).to receive_messages("foo" => "bar", "bat" => "baz")'
       end
     end
   end

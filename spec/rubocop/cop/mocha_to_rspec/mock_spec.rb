@@ -3,7 +3,7 @@ require "rubocop/cop/mocha_to_rspec/at_least"
 module RuboCop
   module Cop
     module MochaToRSpec
-      describe AtLeast, irregular: true do
+      describe AtLeast do
         include RuboCop::RSpec::ExpectOffense
 
         DEFAULT_FILENAME = 'example.rb'.freeze
@@ -18,8 +18,8 @@ module RuboCop
         end
 
         include_examples 'autocorrect',
-          'obj.expects(:foo).at_least_once',
-          'obj.expects(:foo).at_least(:once)'
+                         'obj.expects(:foo).at_least_once',
+                         'obj.expects(:foo).at_least(:once)'
       end
     end
   end

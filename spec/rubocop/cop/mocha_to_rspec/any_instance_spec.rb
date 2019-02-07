@@ -5,7 +5,7 @@ require "rubocop/cop/mocha_to_rspec/any_instance"
 module RuboCop
   module Cop
     module MochaToRSpec
-      describe AnyInstance, irregular: true do
+      describe AnyInstance do
         include RuboCop::RSpec::ExpectOffense
 
         DEFAULT_FILENAME = 'example.rb'.freeze
@@ -25,7 +25,7 @@ module RuboCop
         end
 
         it do
-          # TODO this should be allow
+          # TODO: this should be allow
           expect_offense(<<-RUBY)
             Object.any_instance.stubs(:foo)
                                 ^^^^^ Use `expect_any_instance_of(...)` (rspec-mocks) instead of `any_instance` (Mocha)
@@ -40,17 +40,17 @@ module RuboCop
         end
 
         include_examples 'autocorrect',
-          'Object.any_instance.expects(:foo)',
-          'expect_any_instance_of(Object).to receive(:foo)'
+                         'Object.any_instance.expects(:foo)',
+                         'expect_any_instance_of(Object).to receive(:foo)'
         include_examples 'autocorrect',
-          'Object.any_instance.stubs(:foo)',
-          'allow_any_instance_of(Object).to receive(:foo)'
+                         'Object.any_instance.stubs(:foo)',
+                         'allow_any_instance_of(Object).to receive(:foo)'
         include_examples 'autocorrect',
-          'Purchase.any_instance.stubs(lender_transfered: true)',
-          'allow_any_instance_of(Purchase).to receive(lender_transfered: true)'
+                         'Purchase.any_instance.stubs(lender_transfered: true)',
+                         'allow_any_instance_of(Purchase).to receive(lender_transfered: true)'
         include_examples 'autocorrect',
-          'Purchase.any_instance.stubs(lender_transfer_date: Date.parse("2017-01-15").end_of_day)',
-          'allow_any_instance_of(Purchase).to receive(lender_transfer_date: Date.parse("2017-01-15").end_of_day)'
+                         'Purchase.any_instance.stubs(lender_transfer_date: Date.parse("2017-01-15").end_of_day)',
+                         'allow_any_instance_of(Purchase).to receive(lender_transfer_date: Date.parse("2017-01-15").end_of_day)'
       end
     end
   end

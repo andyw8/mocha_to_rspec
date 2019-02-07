@@ -7,7 +7,7 @@ require "support/rubocop_autocorrect"
 module RuboCop
   module Cop
     module MochaToRSpec
-      describe StubsWithArgs, irregular: true do
+      describe StubsWithArgs do
         include RuboCop::RSpec::ExpectOffense
 
         DEFAULT_FILENAME = 'example.rb'.freeze
@@ -48,32 +48,32 @@ module RuboCop
         end
 
         include_examples 'autocorrect',
-          'object.stubs(:foo).with(:bar).returns(:z)', # variable
-          'allow(object).to receive(:foo).with(:bar).and_return(:z)'
+                         'object.stubs(:foo).with(:bar).returns(:z)', # variable
+                         'allow(object).to receive(:foo).with(:bar).and_return(:z)'
         include_examples 'autocorrect',
-          'Object.stubs(:foo).with(:bar).returns(:z)', # class
-          'allow(Object).to receive(:foo).with(:bar).and_return(:z)'
+                         'Object.stubs(:foo).with(:bar).returns(:z)', # class
+                         'allow(Object).to receive(:foo).with(:bar).and_return(:z)'
         include_examples 'autocorrect',
-          'Object.stubs(:fop).with(:bar).returns(:z)',
-          'allow(Object).to receive(:fop).with(:bar).and_return(:z)'
+                         'Object.stubs(:fop).with(:bar).returns(:z)',
+                         'allow(Object).to receive(:fop).with(:bar).and_return(:z)'
         include_examples 'autocorrect',
-          'Object.stubs(:foo).with("bar").returns(:z)',
-          'allow(Object).to receive(:foo).with("bar").and_return(:z)'
+                         'Object.stubs(:foo).with("bar").returns(:z)',
+                         'allow(Object).to receive(:foo).with("bar").and_return(:z)'
         include_examples 'autocorrect',
-          'Object.expects(:foo).with(:bar).returns(:z)',
-          'expect(Object).to receive(:foo).with(:bar).and_return(:z)'
+                         'Object.expects(:foo).with(:bar).returns(:z)',
+                         'expect(Object).to receive(:foo).with(:bar).and_return(:z)'
         include_examples 'autocorrect',
-          'Object.expects(:foo).with(:bar, :baz).returns(:z)',
-          'expect(Object).to receive(:foo).with(:bar, :baz).and_return(:z)'
+                         'Object.expects(:foo).with(:bar, :baz).returns(:z)',
+                         'expect(Object).to receive(:foo).with(:bar, :baz).and_return(:z)'
         include_examples 'autocorrect',
-          'Widget.expects(:foo).with(:bar, :baz).returns(:z)',
-          'expect(Widget).to receive(:foo).with(:bar, :baz).and_return(:z)'
+                         'Widget.expects(:foo).with(:bar, :baz).returns(:z)',
+                         'expect(Widget).to receive(:foo).with(:bar, :baz).and_return(:z)'
         include_examples 'autocorrect',
-          'Namespace::Object.expects(:foo).with(:bar, :baz).returns(:z)',
-          'expect(Namespace::Object).to receive(:foo).with(:bar, :baz).and_return(:z)'
+                         'Namespace::Object.expects(:foo).with(:bar, :baz).returns(:z)',
+                         'expect(Namespace::Object).to receive(:foo).with(:bar, :baz).and_return(:z)'
         include_examples 'autocorrect',
-          'row.expects(value_method).with(arg).returns(return_value)',
-          'expect(row).to receive(value_method).with(arg).and_return(return_value)'
+                         'row.expects(value_method).with(arg).returns(return_value)',
+                         'expect(row).to receive(value_method).with(arg).and_return(return_value)'
       end
     end
   end

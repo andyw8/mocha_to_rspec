@@ -3,7 +3,7 @@ require 'rubocop/cop/mocha_to_rspec/stub'
 module RuboCop
   module Cop
     module MochaToRSpec
-      describe Stub, irregular: true do
+      describe Stub do
         include RuboCop::RSpec::ExpectOffense
 
         DEFAULT_FILENAME = 'example.rb'.freeze
@@ -31,11 +31,11 @@ module RuboCop
         end
 
         include_examples 'autocorrect',
-          'object = stub',
-          'object = double'
+                         'object = stub',
+                         'object = double'
         include_examples 'autocorrect',
-          'object = stub(foo: :bar)',
-          'object = double(foo: :bar)'
+                         'object = stub(foo: :bar)',
+                         'object = double(foo: :bar)'
       end
     end
   end

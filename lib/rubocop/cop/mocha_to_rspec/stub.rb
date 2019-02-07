@@ -7,10 +7,10 @@ module RuboCop
         # def_node_matcher :candidate?, '$(send _ :returns $_)'
 
         def on_send(node)
-          _receiver, method_name, args = *node
-          if method_name == :stub
-            add_offense(node)
-          end
+          _receiver, method_name, _args = *node
+          return unless method_name == :stub
+
+          add_offense(node)
         end
 
         def autocorrect(node)

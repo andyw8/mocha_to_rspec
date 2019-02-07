@@ -3,7 +3,7 @@ require "rubocop/cop/mocha_to_rspec/mock"
 module RuboCop
   module Cop
     module MochaToRSpec
-      describe Mock, irregular: true do
+      describe Mock do
         include RuboCop::RSpec::ExpectOffense
 
         DEFAULT_FILENAME = 'example.rb'.freeze
@@ -31,11 +31,11 @@ module RuboCop
         end
 
         include_examples 'autocorrect',
-          'object = mock',
-          'object = double'
+                         'object = mock',
+                         'object = double'
         include_examples 'autocorrect',
-          'object = mock(foo: :bar)',
-          'object = double(foo: :bar)'
+                         'object = mock(foo: :bar)',
+                         'object = double(foo: :bar)'
       end
     end
   end
