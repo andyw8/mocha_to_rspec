@@ -23,7 +23,7 @@ module MochaToRSpec
         .last
         .gsub(".rb", '')
         .camelize
-    end.reject { |x| x == "Version" }
+    end.reject { |x| x == "Version" || x == "Context" }
         .map { |x| "#{MochaToRSpec}/#{x}" }
   end
 end
