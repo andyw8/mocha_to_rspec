@@ -34,8 +34,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.16"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
-  spec.add_development_dependency "rubocop", "~> 0.63"
-  spec.add_development_dependency "rubocop-rspec"
-  spec.add_development_dependency "activesupport"
+  spec.add_dependency "rubocop", "~> 0.63"
+  spec.add_dependency "rubocop-rspec"
+  spec.add_dependency "activesupport"
   spec.add_development_dependency "pry"
 end
