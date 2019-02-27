@@ -28,7 +28,12 @@ module RuboCop
             message, _, _ = *args
             multi = args.hash_type? && args.pairs.count > 1
             k, v = message.children
-            key = k.source
+            # The parser seems to handle 1.9 hashes differently... must be a better way though.
+            key = if k.type == :sym  && k.source[0] != ':'
+                    ":#{k.source}"
+                  else
+                    k.source
+                  end
             value = v.source
 
             object = receiver.source
@@ -42,7 +47,7 @@ module RuboCop
             if multi
               corrector.replace(node.source_range, "#{allow_or_expect}(#{object}).to receive_messages(#{args.source})")
             else
-              corrector.replace(node.source_range, "#{allow_or_expect}(#{object}).to receive(:#{key}).and_return(#{value})")
+              corrector.replace(node.source_range, "#{allow_or_expect}(#{object}).to receive(#{key}).and_return(#{value})")
             end
           end
         end

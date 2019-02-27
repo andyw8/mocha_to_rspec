@@ -46,6 +46,9 @@ module RuboCop
                          'Object.stubs(foo: :bar)',
                          'allow(Object).to receive(:foo).and_return(:bar)'
         include_examples 'autocorrect',
+                         'Object.stubs(:foo => :bar)',
+                         'allow(Object).to receive(:foo).and_return(:bar)'
+        include_examples 'autocorrect',
                          'object.stubs(foo: :bar)',
                          'allow(object).to receive(:foo).and_return(:bar)'
         include_examples 'autocorrect',
