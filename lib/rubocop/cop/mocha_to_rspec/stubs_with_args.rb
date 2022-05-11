@@ -30,7 +30,8 @@ CODE
                                 raise "Got #{variant}"
                               end
 
-            replacement = "#{allow_or_expect}(#{subject.source}).to receive(#{method_name.source}).with(#{args_list}).and_return(#{ret_val.source})"
+            with_args = args_list.empty? ? 'no_args' : args_list
+            replacement = "#{allow_or_expect}(#{subject.source}).to receive(#{method_name.source}).with(#{with_args}).and_return(#{ret_val.source})"
             corrector.replace(node.source_range, replacement)
           end
         end
